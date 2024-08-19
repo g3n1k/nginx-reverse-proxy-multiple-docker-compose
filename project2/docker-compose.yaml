@@ -1,0 +1,16 @@
+# version: '3.8'
+
+services:
+  nginx:
+    image: nginx:alpine
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+    volumes:
+      - ./sites:/etc/nginx/conf.d
+    networks:
+      - my_custom_network
+
+networks:
+  my_custom_network:
+    external: true  # Menggunakan network yang sama dengan PHP-FPM

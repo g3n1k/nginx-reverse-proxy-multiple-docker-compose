@@ -1,0 +1,28 @@
+# version: '3.8'
+
+services:
+  nginx-p1:
+    image: nginx:alpine
+    container_name: nginx-p1
+    tty: true
+    ports:
+      - "8080:80"
+    volumes:
+      - ./sites:/etc/nginx/conf.d
+      - ./php82.ub:/var/www/php82.ub:delegated
+    networks:
+      - my_custom_network
+
+  php-fpm-82:
+    image: php:8.2-fpm
+    container_name: php-fpm-82
+    volumes:
+      - ./php82.ub:/var/www/php82.ub
+    networks:
+      - my_custom_network
+    expose:
+      - "9000"
+
+networks:
+  my_custom_network:
+    external: true  # Menggunakan network yang akan dibuat secara eksternal
